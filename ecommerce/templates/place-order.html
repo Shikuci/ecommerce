@@ -1,0 +1,470 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Place Order | GreatKart{% endblock %}
+
+{% block content %}
+
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if success %}
+        <div class="alert alert-success">
+            {{ success }}
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'place_order' %}">
+            {% csrf_token %}
+
+            <div class="row">
+
+                <!-- LEFT SIDE -->
+                <main class="col-md-8">
+
+                    <!-- REVIEW CART -->
+                    <article class="card mb-4">
+                        <div class="card-body">
+
+                            <h4 class="card-title mb-4">
+                                Review your order
+                            </h4>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <figure class="itemside mb-4">
+                                        <div class="aside">
+                                            <img
+                                                src="{% static 'images/items/1.jpg' %}"
+                                                class="border img-sm"
+                                                alt="Product"
+                                            >
+                                        </div>
+
+                                        <figcaption class="info">
+                                            <p>Apple iPad (2019) 32GB Wi-Fi Gold</p>
+                                            <span class="text-muted">
+                                                Quantity: 2
+                                            </span>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <figure class="itemside mb-4">
+                                        <div class="aside">
+                                            <img
+                                                src="{% static 'images/items/2.jpg' %}"
+                                                class="border img-sm"
+                                                alt="Product"
+                                            >
+                                        </div>
+
+                                        <figcaption class="info">
+                                            <p>Apple iPad (2019) 32GB Wi-Fi Gold</p>
+                                            <span class="text-muted">
+                                                Quantity: 1
+                                            </span>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+
+                            </div>
+
+                            <a href="{% url 'cart' %}"
+                               class="btn btn-outline-primary">
+                                <i class="fa fa-arrow-left"></i>
+                                Back to cart
+                            </a>
+
+                        </div>
+                    </article>
+                    <!-- REVIEW CART END -->
+
+
+                    <!-- CONTACT INFORMATION -->
+                    <article class="card mb-4">
+                        <div class="card-body">
+
+                            <h4 class="card-title mb-4">
+                                Contact information
+                            </h4>
+
+                            <div class="row">
+
+                                <div class="form-group col-sm-6">
+                                    <label for="first_name">
+                                        First name *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="first_name"
+                                        name="first_name"
+                                        placeholder="Enter your first name"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label for="last_name">
+                                        Last name *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="last_name"
+                                        name="last_name"
+                                        placeholder="Enter your last name"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label for="phone">
+                                        Phone number *
+                                    </label>
+
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        placeholder="+976 99112233"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label for="email">
+                                        Email address *
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="example@gmail.com"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </article>
+                    <!-- CONTACT INFORMATION END -->
+
+
+                    <!-- DELIVERY INFORMATION -->
+                    <article class="card mb-4">
+                        <div class="card-body">
+
+                            <h4 class="card-title mb-4">
+                                Delivery information
+                            </h4>
+
+                            <div class="row">
+
+                                <div class="form-group col-sm-6">
+                                    <label for="country">
+                                        Country *
+                                    </label>
+
+                                    <select
+                                        id="country"
+                                        name="country"
+                                        class="form-control"
+                                        required
+                                    >
+                                        <option value="Mongolia">
+                                            Mongolia
+                                        </option>
+
+                                        <option value="United States">
+                                            United States
+                                        </option>
+
+                                        <option value="South Korea">
+                                            South Korea
+                                        </option>
+
+                                        <option value="Japan">
+                                            Japan
+                                        </option>
+
+                                        <option value="Other">
+                                            Other
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label for="city">
+                                        City *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="city"
+                                        name="city"
+                                        placeholder="e.g. Ulaanbaatar"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group col-sm-8">
+                                    <label for="street">
+                                        Street / District *
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="street"
+                                        name="street"
+                                        placeholder="Enter street or district"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group col-sm-4">
+                                    <label for="building">
+                                        Building
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="building"
+                                        name="building"
+                                        placeholder="Building number"
+                                        class="form-control"
+                                    >
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label for="apartment">
+                                        Apartment / Door number
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="apartment"
+                                        name="apartment"
+                                        placeholder="Apartment number"
+                                        class="form-control"
+                                    >
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label for="postal_code">
+                                        Postal code
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="postal_code"
+                                        name="postal_code"
+                                        placeholder="Postal code"
+                                        class="form-control"
+                                    >
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label for="delivery_note">
+                                        Additional delivery instructions
+                                    </label>
+
+                                    <textarea
+                                        id="delivery_note"
+                                        name="delivery_note"
+                                        class="form-control"
+                                        rows="3"
+                                        placeholder="Optional instructions for delivery"
+                                    ></textarea>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </article>
+                    <!-- DELIVERY INFORMATION END -->
+
+
+                    <!-- PAYMENT METHOD -->
+                    <article class="card mb-4">
+                        <div class="card-body">
+
+                            <h4 class="card-title mb-4">
+                                Payment method
+                            </h4>
+
+                            <div class="custom-control custom-radio mb-3">
+                                <input
+                                    type="radio"
+                                    id="payment_cash"
+                                    name="payment_method"
+                                    value="cash"
+                                    class="custom-control-input"
+                                    checked
+                                    required
+                                >
+
+                                <label
+                                    class="custom-control-label"
+                                    for="payment_cash"
+                                >
+                                    Cash on delivery
+                                </label>
+
+                                <p class="text-muted small ml-4 mb-0">
+                                    Pay when your order arrives.
+                                </p>
+                            </div>
+
+                            <hr>
+
+                            <div class="custom-control custom-radio mb-3">
+                                <input
+                                    type="radio"
+                                    id="payment_card"
+                                    name="payment_method"
+                                    value="card"
+                                    class="custom-control-input"
+                                >
+
+                                <label
+                                    class="custom-control-label"
+                                    for="payment_card"
+                                >
+                                    Credit / Debit card
+                                </label>
+
+                                <p class="text-muted small ml-4 mb-0">
+                                    Online card payment is not connected yet.
+                                </p>
+                            </div>
+
+                            <hr>
+
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    id="payment_transfer"
+                                    name="payment_method"
+                                    value="bank_transfer"
+                                    class="custom-control-input"
+                                >
+
+                                <label
+                                    class="custom-control-label"
+                                    for="payment_transfer"
+                                >
+                                    Bank transfer
+                                </label>
+
+                                <p class="text-muted small ml-4 mb-0">
+                                    Bank transfer processing is not connected yet.
+                                </p>
+                            </div>
+
+                        </div>
+                    </article>
+                    <!-- PAYMENT METHOD END -->
+
+                </main>
+                <!-- LEFT SIDE END -->
+
+
+                <!-- RIGHT SIDE: ORDER SUMMARY -->
+                <aside class="col-md-4">
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="card-title mb-4">
+                                Order summary
+                            </h4>
+
+                            <dl class="dlist-align">
+                                <dt>Subtotal:</dt>
+
+                                <dd class="text-right">
+                                    $69.97
+                                </dd>
+                            </dl>
+
+                            <dl class="dlist-align">
+                                <dt>Delivery:</dt>
+
+                                <dd class="text-right">
+                                    $0.00
+                                </dd>
+                            </dl>
+
+                            <dl class="dlist-align">
+                                <dt>Tax:</dt>
+
+                                <dd class="text-right">
+                                    $10.00
+                                </dd>
+                            </dl>
+
+                            <hr>
+
+                            <dl class="dlist-align">
+                                <dt>
+                                    <strong>Total:</strong>
+                                </dt>
+
+                                <dd class="text-right text-dark">
+                                    <strong>$79.97</strong>
+                                </dd>
+                            </dl>
+
+                            <hr>
+
+                            <p class="text-center text-muted small">
+                                Please check your contact and delivery
+                                information before placing your order.
+                            </p>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-block"
+                            >
+                                <i class="fa fa-check"></i>
+                                Place order
+                            </button>
+
+                            <a
+                                href="{% url 'store' %}"
+                                class="btn btn-outline-secondary btn-block"
+                            >
+                                Continue shopping
+                            </a>
+
+                        </div>
+                    </div>
+
+                </aside>
+                <!-- RIGHT SIDE END -->
+
+            </div>
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}

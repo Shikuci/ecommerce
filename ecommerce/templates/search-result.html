@@ -1,0 +1,278 @@
+```html
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search Results | GreatKart{% endblock %}
+
+{% block content %}
+
+<!-- PAGE TITLE -->
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page">Search Results</h2>
+    </div>
+</section>
+
+<!-- SEARCH RESULTS -->
+<section class="section-content padding-y">
+    <div class="container">
+
+        <div class="row">
+
+            <!-- FILTER SIDEBAR -->
+            <aside class="col-md-3">
+                <div class="card">
+
+                    <!-- CATEGORIES -->
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#collapse_categories"
+                               data-toggle="collapse"
+                               aria-expanded="true">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Categories</h6>
+                            </a>
+                        </header>
+
+                        <div class="filter-content collapse show" id="collapse_categories">
+                            <div class="card-body">
+                                <ul class="list-menu">
+                                    <li><a href="{% url 'store' %}">Electronics</a></li>
+                                    <li><a href="{% url 'store' %}">Watches</a></li>
+                                    <li><a href="{% url 'store' %}">Clothes</a></li>
+                                    <li><a href="{% url 'store' %}">Home items</a></li>
+                                    <li><a href="{% url 'store' %}">Accessories</a></li>
+                                    <li><a href="{% url 'store' %}">Other products</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- SIZES -->
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#collapse_sizes"
+                               data-toggle="collapse"
+                               aria-expanded="true">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Sizes</h6>
+                            </a>
+                        </header>
+
+                        <div class="filter-content collapse show" id="collapse_sizes">
+                            <div class="card-body">
+                                <label class="checkbox-btn">
+                                    <input type="checkbox" name="size" value="XS">
+                                    <span class="btn btn-light">XS</span>
+                                </label>
+
+                                <label class="checkbox-btn">
+                                    <input type="checkbox" name="size" value="S">
+                                    <span class="btn btn-light">S</span>
+                                </label>
+
+                                <label class="checkbox-btn">
+                                    <input type="checkbox" name="size" value="M">
+                                    <span class="btn btn-light">M</span>
+                                </label>
+
+                                <label class="checkbox-btn">
+                                    <input type="checkbox" name="size" value="L">
+                                    <span class="btn btn-light">L</span>
+                                </label>
+
+                                <label class="checkbox-btn">
+                                    <input type="checkbox" name="size" value="XL">
+                                    <span class="btn btn-light">XL</span>
+                                </label>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PRICE FILTER -->
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#collapse_price"
+                               data-toggle="collapse"
+                               aria-expanded="true">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Price Range</h6>
+                            </a>
+                        </header>
+
+                        <div class="filter-content collapse show" id="collapse_price">
+                            <div class="card-body">
+                                <form method="GET" action="{% url 'search_result' %}">
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for="min_price">Min</label>
+                                            <select id="min_price"
+                                                    name="min_price"
+                                                    class="form-control">
+                                                <option value="0">$0</option>
+                                                <option value="50">$50</option>
+                                                <option value="100">$100</option>
+                                                <option value="150">$150</option>
+                                                <option value="200">$200</option>
+                                                <option value="500">$500</option>
+                                                <option value="1000">$1000</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="max_price">Max</label>
+                                            <select id="max_price"
+                                                    name="max_price"
+                                                    class="form-control">
+                                                <option value="50">$50</option>
+                                                <option value="100">$100</option>
+                                                <option value="150">$150</option>
+                                                <option value="200">$200</option>
+                                                <option value="500">$500</option>
+                                                <option value="1000">$1000</option>
+                                                <option value="2000">$2000+</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-block btn-primary">
+                                        Apply
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </aside>
+
+            <!-- PRODUCT LIST -->
+            <main class="col-md-9">
+
+                <header class="border-bottom mb-4 pb-3">
+                    <div class="form-inline">
+                        <span class="mr-md-auto">
+                            {% if products %}
+                                {{ products|length }} items found
+                            {% else %}
+                                Products
+                            {% endif %}
+                        </span>
+                    </div>
+                </header>
+
+                <div class="row">
+
+                    {% if products %}
+
+                        {% for product in products %}
+                            <div class="col-md-4 col-sm-6">
+                                <figure class="card card-product-grid">
+
+                                    <div class="img-wrap">
+                                        {% if product.image %}
+                                            <img src="{{ product.image.url }}"
+                                                 alt="{{ product.name }}">
+                                        {% else %}
+                                            <img src="{% static 'images/items/1.jpg' %}"
+                                                 alt="{{ product.name }}">
+                                        {% endif %}
+                                    </div>
+
+                                    <figcaption class="info-wrap">
+                                        <div class="fix-height">
+                                            <a href="{% url 'product_detail' %}"
+                                               class="title">
+                                                {{ product.name }}
+                                            </a>
+
+                                            <div class="price-wrap mt-2">
+                                                <span class="price">
+                                                    ${{ product.price }}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <a href="{% url 'cart' %}"
+                                           class="btn btn-block btn-primary">
+                                            Add to cart
+                                        </a>
+                                    </figcaption>
+
+                                </figure>
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+
+                        <!-- STATIC DEMO PRODUCTS -->
+                        {% for item in "12345678" %}
+                            <div class="col-md-4 col-sm-6">
+                                <figure class="card card-product-grid">
+
+                                    <div class="img-wrap">
+                                        <img src="{% static 'images/items/' %}{{ forloop.counter }}.jpg"
+                                             alt="Product {{ forloop.counter }}">
+                                    </div>
+
+                                    <figcaption class="info-wrap">
+                                        <div class="fix-height">
+                                            <a href="{% url 'product_detail' %}"
+                                               class="title">
+                                                GreatKart Product {{ forloop.counter }}
+                                            </a>
+
+                                            <div class="price-wrap mt-2">
+                                                <span class="price">$1280.00</span>
+                                            </div>
+                                        </div>
+
+                                        <a href="{% url 'cart' %}"
+                                           class="btn btn-block btn-primary">
+                                            Add to cart
+                                        </a>
+                                    </figcaption>
+
+                                </figure>
+                            </div>
+                        {% endfor %}
+
+                    {% endif %}
+
+                </div>
+
+                <!-- PAGINATION -->
+                <nav class="mt-4" aria-label="Product page navigation">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Previous</a>
+                        </li>
+
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </main>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+```
