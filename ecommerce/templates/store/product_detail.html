@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ single_product.product_name }} | GreatKart{% endblock %}
+
+{% block content %}
+
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'index' %}">Home</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{% url 'store' %}">Store</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ single_product.category.get_url }}">
+                        {{ single_product.category.category_name }}
+                    </a>
+                </li>
+
+                <li class="breadcrumb-item active">
+                    {{ single_product.product_name }}
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Product detail -->
+        <div class="card">
+            <div class="row no-gutters">
+
+                <!-- Product image -->
+                <aside class="col-md-6">
+                    <div class="text-center p-4">
+
+                        {% if single_product.images %}
+                            <img
+                                src="{{ single_product.images.url }}"
+                                alt="{{ single_product.product_name }}"
+                                class="img-fluid"
+                                style="max-height: 450px; object-fit: contain;"
+                            >
+                        {% else %}
+                            <p class="text-muted">
+                                Зураг оруулаагүй байна.
+                            </p>
+                        {% endif %}
+
+                    </div>
+                </aside>
+
+                <!-- Product information -->
+                <main class="col-md-6">
+                    <div class="card-body">
+
+                        <h2 class="title mb-3">
+                            {{ single_product.product_name }}
+                        </h2>
+
+                        <div class="mb-3">
+                            <span class="h3 text-primary">
+                                {{ single_product.price }} ₮
+                            </span>
+                        </div>
+
+                        <hr>
+
+                        <h5>Барааны тайлбар</h5>
+
+                        <p>
+                            {{ single_product.description|default:"Тайлбар байхгүй байна." }}
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            <strong>Ангилал:</strong>
+                            {{ single_product.category.category_name }}
+                        </p>
+
+                        <p>
+                            <strong>Үлдэгдэл:</strong>
+                            {{ single_product.stock }} ширхэг
+                        </p>
+
+                        <p>
+                            <strong>Төлөв:</strong>
+
+                            {% if single_product.is_available and single_product.stock > 0 %}
+                                <span class="badge badge-success">
+                                    Бэлэн байгаа
+                                </span>
+                            {% else %}
+                                <span class="badge badge-danger">
+                                    Бараа дууссан
+                                </span>
+                            {% endif %}
+                        </p>
+
+                        <hr>
+
+                        <!-- Stock байгаа үед -->
+                        {% if single_product.is_available and single_product.stock > 0 %}
+
+                            <form method="POST" action="{% url 'cart' %}">
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="product_id"
+                                    value="{{ single_product.id }}"
+                                >
+
+                                <div class="form-group">
+                                    <label for="quantity">
+                                        Тоо ширхэг
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        name="quantity"
+                                        id="quantity"
+                                        value="1"
+                                        min="1"
+                                        max="{{ single_product.stock }}"
+                                        class="form-control"
+                                        style="max-width: 120px;"
+                                        required
+                                    >
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    Сагсанд нэмэх
+                                </button>
+                            </form>
+
+                        {% else %}
+
+                            <div class="alert alert-warning">
+                                <i class="fa fa-exclamation-circle"></i>
+
+                                <strong>
+                                    Уучлаарай, энэ бараа дууссан байна.
+                                </strong>
+
+                                <p class="mb-0">
+                                    Одоогоор сагсанд нэмэх боломжгүй.
+                                </p>
+                            </div>
+
+                        {% endif %}
+
+                        <a
+                            href="{% url 'store' %}"
+                            class="btn btn-outline-secondary mt-3"
+                        >
+                            <i class="fa fa-arrow-left"></i>
+                            Дэлгүүр рүү буцах
+                        </a>
+
+                    </div>
+                </main>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Store | GreatKart{% endblock %}
+
+{% block content %}
+<section class="section-content padding-y">
+    <div class="container">
+
+        <header class="section-heading mb-4">
+            <h2>
+                {% if current_category %}
+                    {{ current_category.category_name }}
+                {% else %}
+                    Манай дэлгүүр
+                {% endif %}
+            </h2>
+            <p>Бүтээгдэхүүнүүдтэй танилцана уу.</p>
+        </header>
+
+        <div class="row">
+            <aside class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Ангилал</strong>
+                    </div>
+
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'store' %}"
+                           class="list-group-item list-group-item-action">
+                            Бүх бүтээгдэхүүн
+                        </a>
+
+                        {% for category in categories %}
+                            <a href="{{ category.get_url }}"
+                               class="list-group-item list-group-item-action">
+                                {{ category.category_name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </aside>
+
+            <main class="col-md-9">
+                <div class="row">
+
+                    {% for product in products %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+
+                                <a href="{{ product.get_url }}"
+                                   class="text-center p-3">
+                                    {% if product.images %}
+                                        <img
+                                            src="{{ product.images.url }}"
+                                            alt="{{ product.product_name }}"
+                                            class="card-img-top"
+                                            style="height: 200px; object-fit: contain;">
+                                    {% else %}
+                                        <div class="py-5 text-muted">
+                                            Зураг байхгүй
+                                        </div>
+                                    {% endif %}
+                                </a>
+
+                                <div class="card-body d-flex flex-column">
+                                    <small class="text-muted">
+                                        {{ product.category.category_name }}
+                                    </small>
+
+                                    <h5 class="card-title mt-2">
+                                        <a href="{{ product.get_url }}"
+                                           class="text-dark">
+                                            {{ product.product_name }}
+                                        </a>
+                                    </h5>
+
+                                    <p class="text-primary font-weight-bold">
+                                        {{ product.price }} ₮
+                                    </p>
+
+                                    {% if product.stock > 0 and product.is_available %}
+                                        <span class="badge badge-success mb-3">
+                                            Бэлэн байгаа
+                                        </span>
+                                    {% else %}
+                                        <span class="badge badge-danger mb-3">
+                                            Бараа дууссан
+                                        </span>
+                                    {% endif %}
+
+                                    <a href="{{ product.get_url }}"
+                                       class="btn btn-outline-primary mt-auto">
+                                        Дэлгэрэнгүй
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                Одоогоор энэ ангилалд бүтээгдэхүүн алга байна.
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </main>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
