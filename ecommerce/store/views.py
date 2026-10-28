@@ -3,33 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
 
 
-def store(request, cat_slug=None):
-    categories = Category.objects.all()
-    products = Product.objects.filter(is_available=True)
-
-    current_category = None
-
-    if cat_slug:
-        current_category = get_object_or_404(
-            Category,
-            slug=cat_slug
-        )
-
-        products = products.filter(
-            category=current_category
-        )
-
-    context = {
-        'categories': categories,
-        'products': products,
-        'current_category': current_category,
-    }
-
-    return render(
-        request,
-        'store/store.html',
-        context
-    )
+def store(request):
+    return render(request, 'store/store.html')
 
 
 def product_detail(request, cat_slug, pro_slug):
