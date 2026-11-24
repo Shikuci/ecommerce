@@ -24,6 +24,48 @@
     <!-- Custom CSS -->
     <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)">
+    <script>
+        try {
+            if (localStorage.getItem('ecom-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        } catch (error) { /* Keep the light theme if storage is unavailable. */ }
+    </script>
+
+    <style>
+        .ecom-brand{display:inline-flex;align-items:center;gap:10px;color:#172b4d;font-weight:800;letter-spacing:.04em;font-size:1.25rem}
+        .ecom-brand:hover{color:#1455c0}
+        .ecom-brand-mark{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#1455c0,#6c63ff);color:#fff;font-size:18px;box-shadow:0 5px 12px rgba(49,103,235,.22)}
+        .ecom-brand small{display:block;color:#718096;font-size:.62rem;font-weight:600;letter-spacing:.15em;line-height:1.1}
+        .header-account{display:flex;align-items:center;gap:10px}
+        .header-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;flex:none;background:#edf2ff;color:#3156a3;border:2px solid #e1e8f5}
+        .header-avatar img{width:100%;height:100%;object-fit:cover}
+        .header-avatar i{font-size:17px}
+        .theme-toggle{width:42px;height:42px;padding:0;margin-left:12px;border:1px solid #dce3ed;border-radius:50%;background:#fff;color:#e5a600;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+        .theme-toggle:hover{transform:translateY(-1px);background:#fff8e5}
+        .theme-toggle i{font-size:18px}
+        @media(max-width:767.98px){.ecom-brand{font-size:1.1rem}.ecom-brand-mark{width:38px;height:38px}.header-account{gap:7px}}
+        html[data-theme="dark"] body{background:#111827;color:#e5e7eb}
+        html[data-theme="dark"] .navbar,html[data-theme="dark"] .header-main,html[data-theme="dark"] .section-footer{background:#151e2c;border-color:#2a3749!important}
+        html[data-theme="dark"] .section-content,html[data-theme="dark"] .section-name,html[data-theme="dark"] .section-intro,html[data-theme="dark"] .section-pagetop,html[data-theme="dark"] .bg{background-color:#111827!important}
+        html[data-theme="dark"] .card,html[data-theme="dark"] .card-body,html[data-theme="dark"] .card-product-grid{background:#1b2637;color:#e5eaf2;border-color:#2a3749}
+        html[data-theme="dark"] .card-header,html[data-theme="dark"] .breadcrumb{background:#202d40;color:#e5eaf2;border-color:#2a3749}
+        html[data-theme="dark"] .section-title,html[data-theme="dark"] .title-page,html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] h4,html[data-theme="dark"] h5,html[data-theme="dark"] h6,html[data-theme="dark"] .title,html[data-theme="dark"] label,html[data-theme="dark"] dt,html[data-theme="dark"] .price{color:#edf2f8}
+        html[data-theme="dark"] p,html[data-theme="dark"] small,html[data-theme="dark"] .text-muted,html[data-theme="dark"] .list-menu a,html[data-theme="dark"] .breadcrumb-item{color:#aab7c8!important}
+        html[data-theme="dark"] .border,html[data-theme="dark"] .border-bottom,html[data-theme="dark"] .border-top,html[data-theme="dark"] hr{border-color:#2a3749!important}
+        html[data-theme="dark"] .form-control,html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{background:#111a28;color:#e5eaf2;border-color:#35445a}
+        html[data-theme="dark"] .form-control::placeholder{color:#8290a3}
+        html[data-theme="dark"] .table,html[data-theme="dark"] .table td,html[data-theme="dark"] .table th{color:#e5eaf2;border-color:#2a3749}
+        html[data-theme="dark"] .page-link{background:#1b2637;color:#c7d4e6;border-color:#35445a}
+        html[data-theme="dark"] .page-item.active .page-link{background:#3167eb;border-color:#3167eb;color:#fff}
+        html[data-theme="dark"] .ecom-brand{color:#eef3fb}
+        html[data-theme="dark"] .ecom-brand small{color:#aab7c8}
+        html[data-theme="dark"] .header-avatar{background:#25354c;color:#c7d4e6;border-color:#3a4b63}
+        html[data-theme="dark"] .theme-toggle{background:#26354a;color:#f7cc54;border-color:#40516a}
+        html[data-theme="dark"] .theme-toggle:hover{background:#32435a}
+        html[data-theme="dark"] .register-content{background:#1b2637}
+        html[data-theme="dark"] .profile-body{background:#1b2637;color:#e5eaf2}
+    </style>
 
     <!-- Custom JavaScript -->
     <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
@@ -52,7 +94,7 @@
                         <a href="#" class="nav-link">English</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">USD</a>
+                        <a href="#" class="nav-link">MNT ₮</a>
                     </li>
                 </ul>
 
@@ -78,8 +120,9 @@
             <div class="row align-items-center">
 
                 <div class="col-lg-2 col-md-3 col-6">
-                    <a href="{% url 'index' %}" class="brand-wrap">
-                        <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo">
+                    <a href="{% url 'index' %}" class="ecom-brand" aria-label="ECOM home">
+                        <span class="ecom-brand-mark"><i class="fas fa-shopping-bag" aria-hidden="true"></i></span>
+                        <span>ECOM<small>ONLINE STORE</small></span>
                     </a>
                 </div>
 
@@ -105,9 +148,9 @@
                 </div>
 
                 <div class="col-lg col-md-6 col-sm-12 col">
-                    <form action="#" class="search">
+                    <form action="{% url 'search_result' %}" method="get" class="search">
                         <div class="input-group w-100">
-                            <input type="text" class="form-control" style="width:60%;" placeholder="Search">
+                            <input type="text" name="keyword" value="{{ request.GET.keyword }}" class="form-control" style="width:60%;" placeholder="Search" aria-label="Search products">
 
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
@@ -121,7 +164,15 @@
                 <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
                     <div class="d-flex justify-content-end mb-3 mb-lg-0">
 
-                        <div class="widget-header">
+                        <div class="header-account">
+                            <a href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}" class="header-avatar" aria-label="Profile">
+                                {% if user.is_authenticated and user.account.pro_image %}
+                                    <img src="{{ user.account.pro_image.url }}" alt="{{ user.first_name|default:user.username }} profile photo">
+                                {% else %}
+                                    <i class="fas fa-user" aria-hidden="true"></i>
+                                {% endif %}
+                            </a>
+                            <div class="widget-header">
                             {% if user.is_authenticated %}
                                 <small class="title text-muted">Welcome {{ user.first_name|default:user.username }}!</small>
                                 <div><a href="{% url 'profile' %}">My profile</a> | <form method="post" action="{% url 'logout' %}" class="d-inline">{% csrf_token %}<button type="submit" class="btn btn-link p-0">Sign out</button></form></div>
@@ -133,14 +184,18 @@
                                     <a href="{% url 'register' %}">Register</a>
                                 </div>
                             {% endif %}
+                            </div>
                         </div>
 
                         <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
                             <div class="icon icon-sm rounded-circle border">
                                 <i class="fa fa-shopping-cart"></i>
                             </div>
-                            <span class="badge badge-pill badge-danger notify">0</span>
+                            <span class="badge badge-pill badge-danger notify">{{ cart_item_count|default:0 }}</span>
                         </a>
+                        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" title="Dark mode">
+                            <i class="fas fa-sun" id="theme-toggle-icon" aria-hidden="true"></i>
+                        </button>
 
                     </div>
                 </div>
@@ -184,6 +239,7 @@
 <!-- FOOTER END -->
 
 {% block extra_js %}{% endblock %}
+<script src="{% static 'js/theme.js' %}" defer></script>
 
 </body>
 </html>

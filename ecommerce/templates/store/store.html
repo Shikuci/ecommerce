@@ -1,23 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <button id = "shoo1" onclick="darah()">шоо 1тоглогч 1</button>
-    <script>
-let tovch1 = document.getElementById("shoo1")
-let darahtoo = 0 ;
-function darah () {
-    darahtoo +=1
-    if (darahtoo==3){
-        tovch1.style.display="";
-    }
-}
+{% extends 'base.html' %}
+{% load static %}
+{% load money %}
 
+{% block title %}{% if is_search %}Search result{% elif selected_category %}{{ selected_category.category_name }}{% else %}Store{% endif %} | Django Online Shopping{% endblock %}
 
-    </script>
-</body>
-</html>d
+{% block content %}
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page">{% if is_search %}Search result{% elif selected_category %}{{ selected_category.category_name }}{% else %}Our Store{% endif %}</h2>
+    </div>
+</section>
+
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <div class="card">
+                    <article class="filter-group">
+                        <header class="card-header"><h6 class="title mb-0">Categories</h6></header>
+                        <div class="card-body">
+                            <ul class="list-menu">
+                                {% for category in categories %}
+                                    <li><a href="{{ category.get_url }}">{{ category.category_name }}</a></li>
+                                {% empty %}
+                                    <li class="text-muted">Ангилал алга.</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="filter-group">
+                        <header class="card-header"><h6 class="title mb-0">Price range</h6></header>
+                        <div class="card-body">
+                            <form method="get" action="{% if is_search %}{% url 'search_result' %}{% else %}{% url 'store' %}{% endif %}">
+                                {% if keyword %}<input type="hidden" name="keyword" value="{{ keyword }}">{% endif %}
+                                <input type="hidden" name="per_page" value="{{ per_page }}">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="min_price">Min</label>
+                                        <input id="min_price" name="min_price" type="number" min="0" class="form-control" value="{{ min_price }}" placeholder="₮0">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="max_price">Max</label>
+                                        <input id="max_price" name="max_price" type="number" min="0" class="form-control" value="{{ max_price }}" placeholder="Any">
+                                    </div>
+                                </div>
+                                <button class="btn btn-block btn-primary" type="submit">Apply</button>
+                            </form>
+                        </div>
+                    </article>
+                </div>
+            </aside>
+
+            <main class="col-md-9">
+                <header class="border-bottom mb-4 pb-3 d-flex justify-content-between align-items-center flex-wrap">
+                    <span>{{ result_count }} бараа</span>
+                    {% if is_search and keyword %}<span class="text-muted"> — “{{ keyword }}”</span>{% endif %}
+                    <form method="get" class="form-inline ml-auto">
+                        {% if keyword %}<input type="hidden" name="keyword" value="{{ keyword }}">{% endif %}
+                        {% if min_price %}<input type="hidden" name="min_price" value="{{ min_price }}">{% endif %}
+                        {% if max_price %}<input type="hidden" name="max_price" value="{{ max_price }}">{% endif %}
+                        <label for="per_page" class="mr-2">Нэг хуудсанд:</label>
+                        <select id="per_page" name="per_page" class="form-control" onchange="this.form.submit()">
+                            {% for option in page_size_options %}
+                                <option value="{{ option }}" {% if per_page == option %}selected{% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </header>
+
+                <div class="row">
+                    {% for product in products %}
+                        <div class="col-md-4 col-sm-6">
+                            <figure class="card card-product-grid">
+                                <a href="{{ product.get_url }}" class="img-wrap">
+                                    {% if product.images %}
+                                        <img src="{{ product.images.url }}" alt="{{ product.product_name }}">
+                                    {% else %}
+                                        <img src="{% static 'images/items/1.jpg' %}" alt="{{ product.product_name }}">
+                                    {% endif %}
+                                </a>
+                                <figcaption class="info-wrap">
+                                    <div class="fix-height">
+                                        <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
+                                        <div class="price-wrap mt-2"><span class="price">{{ product.price|mnt }}</span></div>
+                                        {% if product.stock <= 0 or not product.is_available %}
+                                            <small class="text-danger">Бараа дууссан</small>
+                                        {% else %}
+                                            <small class="text-muted">Үлдэгдэл: {{ product.stock }}</small>
+                                        {% endif %}
+                                    </div>
+                                    {% if product.stock > 0 and product.is_available %}
+                                        <form method="post" action="{% url 'add_cart' product.pk %}">
+                                            {% csrf_token %}
+                                            <button class="btn btn-block btn-primary" type="submit">Add to cart</button>
+                                        </form>
+                                    {% else %}
+                                        <button class="btn btn-block btn-light" type="button" disabled>Бараа дууссан</button>
+                                    {% endif %}
+                                </figcaption>
+                            </figure>
+                        </div>
+                    {% empty %}
+                        <div class="col-12"><div class="alert alert-info">Хайлтад тохирох үр дүн олдсонгүй.</div></div>
+                    {% endfor %}
+                </div>
+
+                {% if page_obj.paginator.num_pages > 1 %}
+                    <nav class="mt-4" aria-label="Product page navigation">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">Previous</a></li>
+                            {% else %}
+                                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                            {% endif %}
+                            {% for page_number in page_obj.paginator.page_range %}
+                                {% if page_number == page_obj.number %}
+                                    <li class="page-item active"><span class="page-link">{{ page_number }}</span></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_number }}">{{ page_number }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item"><a class="page-link" href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.next_page_number }}">Next</a></li>
+                            {% else %}
+                                <li class="page-item disabled"><span class="page-link">Next</span></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+</section>
+{% endblock %}

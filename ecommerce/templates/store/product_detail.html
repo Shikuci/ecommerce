@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load money %}
 
 {% block title %}{{ single_product.product_name }} | GreatKart{% endblock %}
 
@@ -65,7 +66,7 @@
 
                         <div class="mb-3">
                             <span class="h3 text-primary">
-                                {{ single_product.price }} ₮
+                                {{ single_product.price|mnt }}
                             </span>
                         </div>
 
@@ -108,32 +109,8 @@
                         <!-- Stock байгаа үед -->
                         {% if single_product.is_available and single_product.stock > 0 %}
 
-                            <form method="POST" action="{% url 'cart' %}">
+                            <form method="POST" action="{% url 'add_cart' single_product.id %}">
                                 {% csrf_token %}
-
-                                <input
-                                    type="hidden"
-                                    name="product_id"
-                                    value="{{ single_product.id }}"
-                                >
-
-                                <div class="form-group">
-                                    <label for="quantity">
-                                        Тоо ширхэг
-                                    </label>
-
-                                    <input
-                                        type="number"
-                                        name="quantity"
-                                        id="quantity"
-                                        value="1"
-                                        min="1"
-                                        max="{{ single_product.stock }}"
-                                        class="form-control"
-                                        style="max-width: 120px;"
-                                        required
-                                    >
-                                </div>
 
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-shopping-cart"></i>

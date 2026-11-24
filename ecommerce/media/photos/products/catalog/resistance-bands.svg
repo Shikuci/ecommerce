@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Resistance bands">
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#eff6f5"/><stop offset="1" stop-color="#dce9e7"/></linearGradient><filter id="s"><feGaussianBlur stdDeviation="18"/></filter></defs>
+  <rect width="800" height="800" rx="28" fill="url(#bg)"/><ellipse cx="403" cy="640" rx="220" ry="34" fill="#203d3c" opacity=".2" filter="url(#s)"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M265 260c-110 85-120 260 0 345 50 36 118 30 152-8 34-38 27-101-9-131-37-31-96-25-127 9" stroke="#e88c62" stroke-width="36"/>
+    <path d="M396 205c-125 100-132 335 2 408 54 29 116 11 139-32 23-44 1-100-42-123-43-22-100-5-122 37" stroke="#5978a7" stroke-width="36"/>
+    <path d="M522 268c-91 78-94 245 8 304 42 24 91 14 112-20 22-36 7-80-29-100-35-20-81-10-98 25" stroke="#8a9b5b" stroke-width="36"/>
+  </g>
+  <circle cx="289" cy="606" r="22" fill="#e88c62"/><circle cx="537" cy="612" r="22" fill="#5978a7"/><circle cx="642" cy="551" r="22" fill="#8a9b5b"/>
+</svg>

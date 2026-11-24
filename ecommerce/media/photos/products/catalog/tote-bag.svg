@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Canvas tote bag">
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f8f4ec"/><stop offset="1" stop-color="#e8e1d5"/></linearGradient><linearGradient id="bag" x2="1" y2="1"><stop stop-color="#d6b98c"/><stop offset="1" stop-color="#a9804c"/></linearGradient><filter id="s"><feGaussianBlur stdDeviation="18"/></filter></defs>
+  <rect width="800" height="800" rx="28" fill="url(#bg)"/><ellipse cx="400" cy="670" rx="190" ry="28" fill="#574a37" opacity=".2" filter="url(#s)"/>
+  <path d="M275 270c0-90 44-145 125-145s125 55 125 145" fill="none" stroke="#997342" stroke-width="24" stroke-linecap="round"/>
+  <path d="M215 270h370l-34 355H249z" fill="url(#bag)" stroke="#8c6b40" stroke-width="8"/>
+  <path d="M252 310h296M270 590h260" stroke="#ead8b8" stroke-width="8" opacity=".65"/>
+  <rect x="325" y="410" width="150" height="105" rx="8" fill="#bb9868" stroke="#927046" stroke-width="5"/>
+  <path d="M360 450h80" stroke="#e9d7b8" stroke-width="8" stroke-linecap="round"/>
+</svg>

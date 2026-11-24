@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 
+from store.models import Product
+
 
 def index(request):
-    return render(request, 'index.html')
+    products = Product.objects.select_related('category').order_by('-created_date', '-pk')[:8]
+    return render(request, 'index.html', {'products': products})
 
 
 def store(request):

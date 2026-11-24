@@ -1,0 +1,27 @@
+Demo catalog photos
+
+Raster photos were downloaded from Unsplash and are stored locally for the demo catalog. License: https://unsplash.com/license
+
+headphones.jpg — photo-1505740420928-5e560c06d30e
+speaker.jpg — photo-1608043152269-423dbba4e7e1
+camera.jpg — photo-1516035069371-29a1b244cc32
+laptop.jpg — photo-1496181133206-80ce9b88a853
+keyboard.jpg — photo-1587829741301-dc798b83add3
+backpack.jpg — photo-1553062407-98eeb64c6a62
+wallet.jpg — photo-1627123424574-724758594e93
+sunglasses.jpg — photo-1511499767150-a48a237f0083
+tshirt.jpg — photo-1521572163474-6864f9cf17ab
+hoodie.jpg — photo-1556821840-3a63f95609a7
+sneakers.jpg — photo-1542291026-7eec264c27ff
+jacket.jpg — photo-1551028719-00167b16eac5
+dress.jpg — photo-1595777457583-95e059d581b8
+sweater.jpg — photo-1576566588028-4147f3842f27
+coffee-maker.jpg — photo-1495474472287-4d71bcdd2085
+lamp.jpg — photo-1507473885765-e6ed057f782c
+air-purifier.jpg — photo-1585771724684-38269d6639fd
+blender.jpg — photo-1570222094114-d054a817e56b
+dumbbells.jpg — photo-1583454110551-21f2fa2afe61
+bottle.jpg — photo-1602143407151-7111542de6e8
+football.jpg — photo-1579952363873-27f3bade9f55
+
+Product-specific SVG illustrations in this folder were drawn for this local demo catalog.

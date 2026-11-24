@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Lightweight running jacket">
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#eef5f7"/><stop offset="1" stop-color="#dce8eb"/></linearGradient><linearGradient id="coat" x2="1" y2="1"><stop stop-color="#233f53"/><stop offset="1" stop-color="#152c3d"/></linearGradient><filter id="s"><feGaussianBlur stdDeviation="18"/></filter></defs>
+  <rect width="800" height="800" rx="28" fill="url(#bg)"/><ellipse cx="400" cy="658" rx="190" ry="30" fill="#112434" opacity=".2" filter="url(#s)"/>
+  <path d="M326 190l74 38 74-38 77 42 101 128-79 57-58-66v244H285V351l-58 66-79-57 101-128z" fill="url(#coat)" stroke="#102737" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M400 231v364M336 198l64 55 64-55" fill="none" stroke="#b9d0d9" stroke-width="8"/>
+  <path d="M310 470h48M442 470h48" stroke="#80d5d1" stroke-width="9" stroke-linecap="round"/>
+  <path d="M206 372l58 42M594 372l-58 42" stroke="#f4f8f9" stroke-width="8" opacity=".8"/>
+</svg>

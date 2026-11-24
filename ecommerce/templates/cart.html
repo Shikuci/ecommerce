@@ -1,228 +1,57 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load money %}
 
 {% block title %}Shopping Cart | Django Online Shopping{% endblock %}
 
 {% block content %}
-
-<!-- ========================= CART SECTION ========================= -->
 <section class="section-content padding-y bg">
     <div class="container">
-
-        <div class="row">
-
-            <!-- CART ITEMS -->
-            <aside class="col-lg-9">
-                <div class="card">
-
-                    <table class="table table-borderless table-shopping-cart">
-                        <thead class="text-muted">
-                            <tr class="small text-uppercase">
-                                <th scope="col">Product</th>
-                                <th scope="col" width="120">Quantity</th>
-                                <th scope="col" width="120">Price</th>
-                                <th scope="col" class="text-right" width="200"></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            <!-- Product 1 -->
-                            <tr>
-                                <td>
-                                    <figure class="itemside align-items-center">
-                                        <div class="aside">
-                                            <img src="{% static 'images/items/11.jpg' %}"
-                                                 class="img-sm"
-                                                 alt="Camera Canon EOS M50 Kit">
-                                        </div>
-
-                                        <figcaption class="info">
-                                            <a href="{% url 'product_detail' %}"
-                                               class="title text-dark">
-                                                Camera Canon EOS M50 Kit
-                                            </a>
-
-                                            <p class="text-muted small">
-                                                Matrix: 25 Mpx <br>
-                                                Brand: Canon
-                                            </p>
-                                        </figcaption>
-                                    </figure>
-                                </td>
-
-                                <td>
-                                    <input type="number"
-                                           class="form-control"
-                                           value="1"
-                                           min="1"
-                                           aria-label="Product quantity">
-                                </td>
-
-                                <td>
-                                    <div class="price-wrap">
-                                        <var class="price">$1156.00</var>
-                                        <small class="text-muted">$315.20 each</small>
-                                    </div>
-                                </td>
-
-                                <td class="text-right">
-                                    <button type="button" class="btn btn-danger">
-                                        Remove
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Product 2 -->
-                            <tr>
-                                <td>
-                                    <figure class="itemside align-items-center">
-                                        <div class="aside">
-                                            <img src="{% static 'images/items/10.jpg' %}"
-                                                 class="img-sm"
-                                                 alt="ADATA Premier ONE microSDXC">
-                                        </div>
-
-                                        <figcaption class="info">
-                                            <a href="{% url 'product_detail' %}"
-                                               class="title text-dark">
-                                                ADATA Premier ONE microSDXC
-                                            </a>
-
-                                            <p class="text-muted small">
-                                                Size: 256 GB <br>
-                                                Brand: ADATA
-                                            </p>
-                                        </figcaption>
-                                    </figure>
-                                </td>
-
-                                <td>
-                                    <input type="number"
-                                           class="form-control"
-                                           value="1"
-                                           min="1"
-                                           aria-label="Product quantity">
-                                </td>
-
-                                <td>
-                                    <div class="price-wrap">
-                                        <var class="price">$149.97</var>
-                                        <small class="text-muted">$75.00 each</small>
-                                    </div>
-                                </td>
-
-                                <td class="text-right">
-                                    <button type="button" class="btn btn-danger">
-                                        Remove
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Product 3 -->
-                            <tr>
-                                <td>
-                                    <figure class="itemside align-items-center">
-                                        <div class="aside">
-                                            <img src="{% static 'images/items/9.jpg' %}"
-                                                 class="img-sm"
-                                                 alt="Logitech gaming headset">
-                                        </div>
-
-                                        <figcaption class="info">
-                                            <a href="{% url 'product_detail' %}"
-                                               class="title text-dark">
-                                                Logitech Headset for Gaming
-                                            </a>
-
-                                            <p class="small text-muted">
-                                                Version: CUH-ZCT2E <br>
-                                                Brand: Sony
-                                            </p>
-                                        </figcaption>
-                                    </figure>
-                                </td>
-
-                                <td>
-                                    <input type="number"
-                                           class="form-control"
-                                           value="1"
-                                           min="1"
-                                           aria-label="Product quantity">
-                                </td>
-
-                                <td>
-                                    <div class="price-wrap">
-                                        <var class="price">$98.00</var>
-                                        <small class="text-muted">$578.00 each</small>
-                                    </div>
-                                </td>
-
-                                <td class="text-right">
-                                    <button type="button" class="btn btn-danger">
-                                        Remove
-                                    </button>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-
+        <h2 class="mb-4">Таны сагс</h2>
+        {% if messages %}
+            {% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}
+        {% endif %}
+        {% if is_empty %}
+            <div class="card"><div class="card-body text-center">
+                <p class="mb-3">Таны сагс хоосон байна.</p>
+                <a href="{% url 'store' %}" class="btn btn-primary">Дэлгүүр үзэх</a>
+            </div></div>
+        {% else %}
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="card"><div class="table-responsive">
+                        <table class="table table-borderless table-shopping-cart mb-0">
+                            <thead class="text-muted"><tr class="small text-uppercase">
+                                <th scope="col">Бараа</th><th scope="col">Тоо ширхэг</th><th scope="col">Үнэ</th><th scope="col" class="text-right">Үйлдэл</th>
+                            </tr></thead>
+                            <tbody>
+                                {% for item in cart_items %}
+                                    <tr>
+                                        <td><figure class="itemside align-items-center mb-0">
+                                            <div class="aside">{% if item.product.images %}<img src="{{ item.product.images.url }}" class="img-sm" alt="{{ item.product.product_name }}">{% endif %}</div>
+                                            <figcaption class="info"><a href="{{ item.product.get_url }}" class="title text-dark">{{ item.product.product_name }}</a><p class="text-muted small mb-0">Үлдэгдэл: {{ item.product.stock }}</p></figcaption>
+                                        </figure></td>
+                                        <td><div class="d-flex align-items-center">
+                                            <form method="post" action="{% url 'remove_cart' item.product_id %}">{% csrf_token %}<button class="btn btn-light btn-sm" type="submit" aria-label="Нэгээр хасах">−</button></form>
+                                            <span class="px-3">{{ item.quantity }}</span>
+                                            {% if item.quantity < item.product.stock %}<form method="post" action="{% url 'add_cart' item.product_id %}">{% csrf_token %}<button class="btn btn-light btn-sm" type="submit" aria-label="Нэгээр нэмэх">+</button></form>{% endif %}
+                                        </div></td>
+                                        <td><div class="price-wrap"><var class="price">{{ item.subtotal|mnt }}</var><small class="text-muted d-block">{{ item.product.price|mnt }} each</small></div></td>
+                                        <td class="text-right"><form method="post" action="{% url 'remove_cart_item' item.product_id %}">{% csrf_token %}<button class="btn btn-danger btn-sm" type="submit">Хасах</button></form></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div></div>
                 </div>
-            </aside>
-            <!-- CART ITEMS END -->
-
-
-            <!-- ORDER SUMMARY -->
-            <aside class="col-lg-3">
-
-                <div class="card">
-                    <div class="card-body">
-
-                        <dl class="dlist-align">
-                            <dt>Total price:</dt>
-                            <dd class="text-right">$69.97</dd>
-                        </dl>
-
-                        <dl class="dlist-align">
-                            <dt>Tax:</dt>
-                            <dd class="text-right">$10.00</dd>
-                        </dl>
-
-                        <dl class="dlist-align">
-                            <dt>Total:</dt>
-                            <dd class="text-right text-dark">
-                                <strong>$59.97</strong>
-                            </dd>
-                        </dl>
-
-                        <hr>
-
-                        <p class="text-center mb-3">
-                            <img src="{% static 'images/misc/payments.png' %}"
-                                 height="26"
-                                 alt="Payment methods">
-                        </p>
-
-                        <a href="{% url 'order_complete' %}"
-                           class="btn btn-primary btn-block">
-                            Checkout
-                        </a>
-
-                        <a href="{% url 'store' %}"
-                           class="btn btn-light btn-block">
-                            Continue Shopping
-                        </a>
-
-                    </div>
-                </div>
-
-            </aside>
-            <!-- ORDER SUMMARY END -->
-
-        </div>
-
+                <aside class="col-lg-3"><div class="card"><div class="card-body">
+                    <dl class="dlist-align"><dt>Барааны тоо:</dt><dd class="text-right">{{ quantity }}</dd></dl>
+                    <dl class="dlist-align"><dt>Нийт дүн:</dt><dd class="text-right text-dark"><strong>{{ total|mnt }}</strong></dd></dl>
+                    <hr>
+                    <a href="{% url 'place_order' %}" class="btn btn-primary btn-block">Checkout</a>
+                    <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue shopping</a>
+                </div></div></aside>
+            </div>
+        {% endif %}
     </div>
 </section>
-
 {% endblock %}

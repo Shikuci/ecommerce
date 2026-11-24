@@ -1,6 +1,87 @@
-{% extends "base.html" %}
-{% block title %}Create account | GreatKart{% endblock %}
-{% block extra_css %}<style>
-.auth-wrap{max-width:900px;margin:50px auto}.auth-card{border:0;border-radius:18px;overflow:hidden;box-shadow:0 14px 42px rgba(31,45,61,.13)}.auth-aside{padding:44px 34px;background:linear-gradient(145deg,#1455c0,#6c63ff);color:#fff}.auth-aside h2{font-weight:700;line-height:1.2}.auth-aside p{color:rgba(255,255,255,.84);line-height:1.7}.auth-form{padding:38px}.auth-form .form-control{border-radius:9px;min-height:44px}.auth-form label{font-weight:600;color:#34445b}.auth-form ul{padding-left:20px;color:#718096;font-size:.88rem}.auth-form .errorlist{color:#c0392b}.auth-form button{border-radius:9px;padding:11px}
-</style>{% endblock %}
-{% block content %}<section class="section-content padding-y"><div class="container auth-wrap"><div class="card auth-card"><div class="row no-gutters"><aside class="col-md-4 auth-aside"><h2>Join GreatKart</h2><p class="mt-3">Create your account and keep your details together for a smoother shopping experience.</p><p>It only takes a moment to get started.</p></aside><div class="col-md-8 auth-form"><h3 class="mb-1">Create your account</h3><p class="text-muted mb-4">Enter your details below.</p>{% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}<form method="post" enctype="multipart/form-data">{% csrf_token %}{{ user_form.as_p }}{{ account_form.as_p }}<button type="submit" class="btn btn-primary btn-block">Create account</button></form><p class="text-center mt-4 mb-0">Already have an account? <a href="{% url 'signin' %}">Sign in</a></p></div></div></div></div></section>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Бүртгүүлэх | ECOM{% endblock %}
+
+{% block extra_css %}
+<style>
+    .register-shell{max-width:900px;margin:52px auto}
+    .register-card{border:0;border-radius:20px;overflow:hidden;box-shadow:0 18px 48px rgba(23,43,77,.12)}
+    .register-intro{height:100%;min-height:100%;padding:42px 34px;color:#fff;background:linear-gradient(145deg,#174ea6,#6558d9);display:flex;flex-direction:column;justify-content:space-between}
+    .register-intro .intro-icon{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.16);font-size:24px;margin-bottom:28px}
+    .register-intro h2{font-weight:750;line-height:1.2}
+    .register-intro p{color:rgba(255,255,255,.82);line-height:1.7}
+    .register-content{padding:40px 42px}
+    .register-content h1{font-size:1.7rem;font-weight:750;color:#172b4d}
+    .register-field{margin-bottom:18px}
+    .register-field label{display:block;margin-bottom:7px;font-size:.92rem;font-weight:650;color:#34445b}
+    .register-field .form-control{width:100%;min-height:46px;border:1px solid #dce3ed;border-radius:10px;box-shadow:none;padding:10px 13px}
+    .register-field .form-control:focus{border-color:#597fe5;box-shadow:0 0 0 3px rgba(49,103,235,.12)}
+    .register-field input[type=file]{max-width:100%;padding:8px;background:#f8faff}
+    .register-field .field-help{display:block;margin-top:6px;color:#748197;font-size:.8rem;line-height:1.45}
+    .register-field .errorlist{list-style:none;padding:0;margin:6px 0 0;color:#c0392b;font-size:.83rem}
+    .register-submit{min-height:48px;border-radius:10px;font-weight:650;box-shadow:0 7px 16px rgba(49,103,235,.18)}
+    @media(max-width:767.98px){.register-shell{margin:24px auto}.register-intro{min-height:auto;padding:28px}.register-intro .intro-icon{margin-bottom:16px}.register-content{padding:28px 22px}}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="section-content padding-y">
+    <div class="container register-shell">
+        <div class="card register-card">
+            <div class="row no-gutters">
+                <aside class="col-md-4">
+                    <div class="register-intro">
+                        <div>
+                            <div class="intro-icon"><i class="fas fa-shopping-bag" aria-hidden="true"></i></div>
+                            <h2>ECOM-д тавтай морил</h2>
+                            <p class="mt-3">Бүртгэлээ үүсгээд дуртай бараагаа нэг дороос сонгон аваарай.</p>
+                        </div>
+                        <small class="text-white-50">Хурдан. Энгийн. Найдвартай.</small>
+                    </div>
+                </aside>
+                <div class="col-md-8">
+                    <div class="register-content">
+                        <h1>Шинэ бүртгэл</h1>
+                        <p class="text-muted mb-4">Доорх мэдээллийг бөглөнө үү.</p>
+
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+
+                        <form method="post" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                {% for field in user_form %}
+                                    <div class="{% if field.name == 'first_name' or field.name == 'last_name' %}col-md-6{% else %}col-12{% endif %}">
+                                        <div class="register-field">
+                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                            {{ field }}
+                                            {% for error in field.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                                            {% if field.help_text %}<small class="field-help">{{ field.help_text|safe }}</small>{% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                {% for field in account_form %}
+                                    <div class="col-12">
+                                        <div class="register-field">
+                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                            {{ field }}
+                                            {% for error in field.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                                            {% if field.help_text %}<small class="field-help">{{ field.help_text|safe }}</small>{% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if user_form.non_field_errors or account_form.non_field_errors %}
+                                <div class="alert alert-danger">{{ user_form.non_field_errors }}{{ account_form.non_field_errors }}</div>
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary btn-block register-submit">Бүртгэл үүсгэх</button>
+                        </form>
+                        <p class="text-center mt-4 mb-0">Бүртгэлтэй юу? <a href="{% url 'signin' %}">Нэвтрэх</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

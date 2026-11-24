@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Electric kettle">
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#fbf3ed"/><stop offset="1" stop-color="#efe1d6"/></linearGradient><linearGradient id="steel" x2="1"><stop stop-color="#aeb7bd"/><stop offset=".45" stop-color="#f4f6f7"/><stop offset="1" stop-color="#9da8b0"/></linearGradient><filter id="s"><feGaussianBlur stdDeviation="18"/></filter></defs>
+  <rect width="800" height="800" rx="28" fill="url(#bg)"/><ellipse cx="400" cy="650" rx="205" ry="32" fill="#34383c" opacity=".2" filter="url(#s)"/>
+  <path d="M275 280h270l-22 295c-4 45-37 72-83 72h-60c-46 0-79-27-83-72z" fill="url(#steel)" stroke="#8e9aa2" stroke-width="9"/>
+  <path d="M275 320c-72-2-94 58-47 121l62 22" fill="none" stroke="#56616a" stroke-width="24" stroke-linecap="round"/>
+  <path d="M545 324l88 42-88 53" fill="#c5ccd1" stroke="#89949c" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M330 272c15-38 46-58 80-58s65 20 80 58" fill="none" stroke="#45515a" stroke-width="20" stroke-linecap="round"/>
+  <rect x="352" y="602" width="96" height="24" rx="12" fill="#525d65"/><circle cx="400" cy="614" r="7" fill="#6ce0bd"/>
+</svg>
