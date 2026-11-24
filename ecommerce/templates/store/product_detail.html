@@ -32,27 +32,64 @@
             </ol>
         </nav>
 
+        <style>
+            .product-gallery-main-wrap { min-height: 320px; display: flex; align-items: center; justify-content: center; }
+            .product-gallery-main { width: 100%; max-height: 450px; object-fit: contain; }
+            .product-gallery-thumbnails { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
+            .product-gallery-thumb { width: 70px; height: 70px; padding: 4px; border: 1px solid #dee2e6; border-radius: 4px; background: #fff; cursor: pointer; }
+            .product-gallery-thumb.is-active { border: 2px solid #007bff; }
+            .product-gallery-thumb img { width: 100%; height: 100%; object-fit: contain; }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const mainImage = document.getElementById('product-gallery-main');
+                const thumbnails = document.querySelectorAll('.product-gallery-thumb');
+                thumbnails.forEach(function (thumbnail) {
+                    thumbnail.addEventListener('click', function () {
+                        mainImage.src = thumbnail.dataset.image;
+                        mainImage.alt = thumbnail.dataset.alt || '';
+                        thumbnails.forEach(function (item) { item.classList.remove('is-active'); });
+                        thumbnail.classList.add('is-active');
+                    });
+                });
+            });
+        </script>
         <!-- Product detail -->
         <div class="card">
             <div class="row no-gutters">
 
-                <!-- Product image -->
+                <!-- Product image gallery -->
                 <aside class="col-md-6">
-                    <div class="text-center p-4">
-
+                    <div class="product-gallery p-4">
                         {% if single_product.images %}
-                            <img
-                                src="{{ single_product.images.url }}"
-                                alt="{{ single_product.product_name }}"
-                                class="img-fluid"
-                                style="max-height: 450px; object-fit: contain;"
-                            >
+                            <div class="product-gallery-main-wrap">
+                                <img
+                                    id="product-gallery-main"
+                                    src="{{ single_product.images.url }}"
+                                    alt="{{ single_product.product_name }}"
+                                    class="img-fluid product-gallery-main"
+                                >
+                            </div>
+                            <div class="product-gallery-thumbnails" aria-label="Бүтээгдэхүүний зургууд">
+                                <button type="button" class="product-gallery-thumb is-active"
+                                        data-image="{{ single_product.images.url }}"
+                                        data-alt="{{ single_product.product_name }}"
+                                        aria-label="Үндсэн зураг">
+                                    <img src="{{ single_product.images.url }}" alt="">
+                                </button>
+                                {% for gallery_image in single_product.gallery.all %}
+                                    <button type="button" class="product-gallery-thumb"
+                                            data-image="{{ gallery_image.image.url }}"
+                                            data-alt="{{ gallery_image.alt_text|default:single_product.product_name }}"
+                                            aria-label="Нэмэлт зураг {{ forloop.counter }}">
+                                        <img src="{{ gallery_image.image.url }}"
+                                             alt="{{ gallery_image.alt_text|default:single_product.product_name }}">
+                                    </button>
+                                {% endfor %}
+                            </div>
                         {% else %}
-                            <p class="text-muted">
-                                Зураг оруулаагүй байна.
-                            </p>
+                            <p class="text-muted">Зураг оруулаагүй байна.</p>
                         {% endif %}
-
                     </div>
                 </aside>
 
@@ -152,3 +189,4 @@
 </section>
 
 {% endblock %}
+

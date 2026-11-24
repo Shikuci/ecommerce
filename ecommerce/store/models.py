@@ -46,3 +46,26 @@ class Product(models.Model):
             'product_detail',
             args=[self.category.slug, self.slug]
         )
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='gallery',
+        verbose_name='Бүтээгдэхүүн',
+    )
+    image = models.ImageField(
+        upload_to='photos/products/gallery',
+        verbose_name='Зураг',
+    )
+    alt_text = models.CharField(max_length=200, blank=True, verbose_name='Зургийн тайлбар')
+    order = models.PositiveIntegerField(default=0, verbose_name='Дараалал')
+
+    class Meta:
+        ordering = ('order', 'pk')
+        verbose_name = 'Бүтээгдэхүүний зураг'
+        verbose_name_plural = 'Бүтээгдэхүүний зургууд'
+
+    def __str__(self):
+        return f'{self.product.product_name} - зураг {self.order + 1}'

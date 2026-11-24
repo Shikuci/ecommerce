@@ -73,7 +73,7 @@ def search_result(request):
 
 def product_detail(request, cat_slug, pro_slug):
     single_product = get_object_or_404(
-        Product,
+        Product.objects.prefetch_related('gallery'),
         category__slug=cat_slug,
         slug=pro_slug
     )
@@ -87,3 +87,4 @@ def product_detail(request, cat_slug, pro_slug):
         'store/product_detail.html',
         context
     )
+
